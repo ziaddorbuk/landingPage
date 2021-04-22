@@ -1,74 +1,35 @@
-/**
- * 
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- * 
- * Dependencies: None
- * 
- * JS Version: ES2015/ES6
- * 
- * JS Standard: ESlint
- * 
-*/
-/**
- * Define Global Variables
- * 
-*/
-const sections= Array.from(document.querySelectorAll('section'));
-const list =document.getElementById('navbar__list');
-let counter=sections.length;
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
-
-
-
-function isViewed(section){
-    let position = section.getBoundingClientRect();
-    return (position.top>=0);
+/************ define global variables ************/
+let pageSetions = Array.from(document.querySelectorAll('section'));
+let list = document.getElementById('navbar__list');
+let i = 0;
+let numOfSections = pageSetions.length;
+/************ main functions ************/
+ function render(){
+    while(i<pageSetions.length){
+        // get section name
+        sectionName = pageSetions[i].getAttribute('data-nav');
+        sectionLink = pageSetions[i].getAttribute('id');
+        li = document.createElement('li');
+        li.innerHTML = `<a class='menu__link'href='#${sectionLink}'>${sectionName}</a>`;
+        list.appendChild(li);
+        i++;
+    }   
 }
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
- */
-//create navBar
-function newItem(){
-    for(section of sections){
-        sectionName = section.getAttribute('data-nav');
-        link = section.getAttribute('id');
-        item = document.createElement('li');
-        item.innerHTML=`<a class='menu__link'href='#${link}'>${sectionName}</a>`;
-        list.appendChild(item);
-    }
-}
-// Add class 'active' to section when near top of viewport
-function activeSection(){
-    for(section of sections){
-        if(isViewed(section)){
-            if(!section.classList.contains('your-active-class')){
-                section.classList.add('your-active-class');
-            }
-            else {
-                section.classList.remove('your-active-class');
-            }
+function active(){
+    let i2=0;
+    while(i2<numOfSections){
+        if((pageSetions[i2].getBoundingClientRect().top)>=0){
+            if(pageSetions[i2].classList.contains('your-active-class')){
+                pageSetions[i2].classList.remove('your-active-class');
+            }else if(!pageSetions[i2].classList.contains('your-active-class')){
+                pageSetions[i2].classList.add('your-active-class');
+            }   
         }
+        i2++;
     }
 }
-
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-// Set sections as active
-document.addEventListener('scroll',activeSection);
-
-// Build menu 
-newItem();
-
+/************ calling main functions ************/
+// call render fucntion that creates the nav bar
+render();
+/************ events ************/
+document.addEventListener('scroll',active);
