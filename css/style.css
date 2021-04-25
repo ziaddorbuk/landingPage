@@ -220,3 +220,7 @@ section.your-active-class .landing__container::after {
 		           rotate(-360deg);
 	}
 }
+.selected{
+    background-color:rgba(77, 71, 71, 0.404);
+    font-size: large;
+}

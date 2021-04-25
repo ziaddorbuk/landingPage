@@ -12,7 +12,6 @@ let numOfSections = pageSetions.length;
         sectionLink = pageSetions[i].getAttribute('id');
         li = document.createElement('li');
         li.innerHTML = `<a class='menu__link' href='#${sectionLink}'>${sectionName} </a>`;
-        // onclick='funcClick(sectionLink)
         console.log(li);
         list.appendChild(li);
         i++;
@@ -51,17 +50,28 @@ function checkVisibleSection(){
         }
 
     });
-
+// -- get list of <a> tags
+    let aList = document.getElementsByClassName('menu__link');
     //---If the section exists
     if(section){
         if(!section.classList.contains("your-active-class")){
             //---Remove all active classes
             sections.forEach(sec => {
-                sec.classList.remove('your-active-class');  
+                sec.classList.remove('your-active-class'); 
             });
+            //---Clear selected style from all navbar elements
+           for (let index = 0; index < aList.length; index++) {
+               aList[index].classList.remove('selected');
+               
+           }
             //---Add the active class
             section.classList.add('your-active-class');
-            
+            // get href
+            // select the navbar element and chance color by adding selected class
+            var hhhref = section.getAttribute("id");
+             hhhref= '#'+hhhref;
+            var els = document.querySelectorAll("a[href='"+hhhref +"']");
+            els[0].classList.add('selected')
         }
 
     }
